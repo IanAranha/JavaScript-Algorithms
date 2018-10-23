@@ -113,14 +113,127 @@ Node.prototype.contains = function(value)
 }
 
 
-bst = new Node(3) 						//===>  Node{value:{3}, left:{null}, right:{null}}
-console.log(bst)
-bst.insert(22)							//===>  Node{value:{3}, left:{null}, right:{value:{22}, left{null}, right:{null}}}
-bst.insert(33)							//===>  Node{value:{3}, left:{null}, right:{value:{22}, left{null}, right:{value:33, left{nill}, right {null}}}}
-bst.insert(14)							//===>  Node{value:{3}, left:{null}, right:{value:{22}, left{value:14, left{null}, right{null}}, right:{value:33, left{nill}, right {null}}}}
-bst.insert(17)							//===>  Node{value:{3}, left:{null}, right:{value:{22}, left{value:14, left{null}, right{value:17, left{null}, right{null}}}, right:{value:33, left{null}, right {null}}}}
-bst.insert(2)							//===>  Node{value:{3}, left:{value: 2, left:{null} right:{null}}, right:{value:{22}, left{value:14, left{null}, right{value:17, left{null}, right{null}}}, right:{value:33, left{null}, right {null}}}}
-bst.insert(-5)
-console.log(bst)
+bst = new Node(10) 						//===>  Node{value:{3}, left:{null}, right:{null}}
+// console.log(bst)
+// bst.insert(22)							//===>  Node{value:{3}, left:{null}, right:{value:{22}, left{null}, right:{null}}}
+// bst.insert(33)							//===>  Node{value:{3}, left:{null}, right:{value:{22}, left{null}, right:{value:33, left{nill}, right {null}}}}
+// bst.insert(14)							//===>  Node{value:{3}, left:{null}, right:{value:{22}, left{value:14, left{null}, right{null}}, right:{value:33, left{nill}, right {null}}}}
+// bst.insert(17)							//===>  Node{value:{3}, left:{null}, right:{value:{22}, left{value:14, left{null}, right{value:17, left{null}, right{null}}}, right:{value:33, left{null}, right {null}}}}
+// bst.insert(2)							//===>  Node{value:{3}, left:{value: 2, left:{null} right:{null}}, right:{value:{22}, left{value:14, left{null}, right{value:17, left{null}, right{null}}}, right:{value:33, left{null}, right {null}}}}
+// bst.insert(-5)
+// console.log(bst)
+bst.insert(5).insert(15).insert(8).insert(3).insert(7).insert(20).insert(17).insert(9).insert(14);
 console.log(bst.contains(33))  			//===>true
 console.log(bst.contains(50)) 			//===>false
+
+
+
+//Binary Search Tree In-Order Traversal 
+// This visits each node starting from the least and then hitting each in ascending order.
+// Basically the pattern is
+// LEFT ---> PARENT -----> RIGHT 
+
+Node.prototype.In_Order_Traverse = function(fn)
+{
+	//Base case : If there are no leafs in the node, return this.
+	if( !this.left && !this.right)
+		return fn(this)
+
+	// GO LEFT
+	if(this.left) 
+		this.left.In_Order_Traverse(fn)
+
+	//SELF (back to the parent)
+	fn(this)
+
+	//GO RIGHT
+	if(this.right)
+		this.right.In_Order_Traverse(fn)
+}
+
+
+//Establish an empty array
+var Result_In_Order = []
+
+//Establish a function that will travese the whole BST and push each value to the new array
+fn = function(node)
+{
+	Result_In_Order.push(node.value)
+}
+
+bst.In_Order_Traverse(fn)
+
+console.log(Result_In_Order)
+
+
+Node.prototype.Pre_Order_Traverse = function(fn)
+
+//This visits the current node before the child node
+{
+	//Base case : If there are no leafs in the node, return this.
+	if( !this.left && !this.right)
+		return fn(this)
+
+	//SELF 
+	fn(this)
+
+	// GO LEFT
+	if(this.left) 
+		this.left.In_Order_Traverse(fn)
+
+	//GO RIGHT
+	if(this.right)
+		this.right.In_Order_Traverse(fn)
+}
+
+
+
+var Result_Pre_Order = [];
+
+fn = function(node)
+{
+	Result_Pre_Order.push(node.value)
+}
+
+bst.Pre_Order_Traverse(fn)
+
+console.log(Result_Pre_Order);
+
+
+
+
+Node.prototype.Post_Order_Traverse = function(fn)
+
+//This visits the current node after the child node
+{
+	//Base case : If there are no leafs in the node, return this.
+	if( !this.left && !this.right)
+		return fn(this)
+
+	// GO LEFT
+	if(this.left) 
+		this.left.In_Order_Traverse(fn)
+
+	//GO RIGHT
+	if(this.right)
+		this.right.In_Order_Traverse(fn)
+
+	//SELF
+	fn(this)
+}
+
+
+
+var Result_Post_Order = [];
+
+
+fn = function(node)
+{
+	Result_Post_Order.push(node.value)
+}
+
+bst.Post_Order_Traverse(fn)
+
+console.log(Result_Post_Order);
+
+
